@@ -18,6 +18,11 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+admin.site.site_header = "E-Shop Management"
+admin.site.site_title = "E-Shop Management"
+admin.site.index_title = "Welcome to E-Shop Management"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('user/', include('accounts.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
