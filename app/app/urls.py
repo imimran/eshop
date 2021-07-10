@@ -18,11 +18,17 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+from accounts import views
+from accounts import admin_views
+
 admin.site.site_header = "E-Shop Management"
 admin.site.site_title = "E-Shop Management"
 admin.site.index_title = "Welcome to E-Shop Management"
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
+    path('admin/', views.adminLogin),
     path('user/', include('accounts.urls')),
+
+    path('home', admin_views.admin_home, name='admin-home'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

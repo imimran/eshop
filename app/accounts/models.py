@@ -43,18 +43,19 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-class Role(models.Model):
+# class Role(models.Model):
     
-    name = models.CharField(max_length=50)
-    code = models.CharField(max_length=5)
-    status = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+#     name = models.CharField(max_length=50)
+#     code = models.CharField(max_length=5)
+#     status = models.BooleanField(default=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.name       
+#     def __str__(self):
+#         return self.name       
 
 class User(AbstractUser):
+    Role=((1,"Admin"),(2,"Staff"),(3,"Merchant"),(4,"Customer"))
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
@@ -64,7 +65,8 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=True)
     username = None
     updated_at = models.DateTimeField(auto_now=True)
-    role = models.OneToOneField(Role, on_delete=models.CASCADE, blank=True, null=True)
+    role=models.CharField(max_length=255,choices=Role, default=1)
+    # role = models.OneToOneField(Role, on_delete=models.CASCADE, blank=True, null=True)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['phone']
@@ -73,5 +75,25 @@ class User(AbstractUser):
     
     def __str__(self):
         return self.email
+
+
+class AdminUser(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    created_at=models.DateTimeField(auto_now_add=True)
+
+class StaffUser(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    created_at=models.DateTimeField(auto_now_add=True)
+
+class MerchantUser(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    company_name=models.CharField(max_length=255)
+    details=models.CharField(max_length=255)
+    created_at=models.DateTimeField(auto_now_add=True)
+
+
+class CustomerUser(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    created_at=models.DateField(auto_now_add=True)
 
 

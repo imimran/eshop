@@ -4,7 +4,10 @@ from .form import UserRegistationForm, UserLoginForm
 from django.contrib.auth import authenticate, login, logout
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'demo.html')
+
+def adminLogin(request):
+    return render(request, 'admin_section/login.html')
     
 def register(request):
     context={}
@@ -13,7 +16,7 @@ def register(request):
         if form.is_valid():
             form.save()
             return redirect('login')
-        context['register_form']= form
+        context['register_form'] = form
 
     else:
          form = UserRegistationForm()
