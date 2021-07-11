@@ -6,8 +6,6 @@ from django.contrib.auth import authenticate, login, logout
 def home(request):
     return render(request, 'demo.html')
 
-def adminLogin(request):
-    return render(request, 'admin_section/login.html')
     
 def register(request):
     context={}

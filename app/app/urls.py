@@ -27,8 +27,10 @@ admin.site.index_title = "Welcome to E-Shop Management"
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('admin/', views.adminLogin),
+    path('admin/', admin_views.adminLogin, name='admin_login'),
     path('user/', include('accounts.urls')),
+    path('admin-login', admin_views.admin_login_process, name='admin_login_process'),
+    path('admin-logout', admin_views.admin_logout_process, name='admin_logout_process'),
+    path('admin-dashboard', admin_views.admin_dashboard, name='admin_dashboard'),
 
-    path('home', admin_views.admin_home, name='admin-home'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
